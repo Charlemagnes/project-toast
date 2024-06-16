@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect } from "react";
+import React, { createContext, useCallback } from "react";
 import ToastShelf from "../ToastShelf/index";
 import { useEscapeKey } from "../../hooks/useEscapeKey";
 export const ToastContext = createContext(() => {});
