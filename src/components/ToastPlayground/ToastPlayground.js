@@ -1,10 +1,6 @@
 import React, { useContext } from "react";
-
 import Button from "../Button";
-
 import styles from "./ToastPlayground.module.css";
-
-import ToastShelf from "../ToastShelf/index";
 import { ToastContext } from "../ToastProvider/ToastProvider";
 
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
@@ -12,8 +8,7 @@ const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 function ToastPlayground() {
   const [message, setMessage] = React.useState("");
   const [variant, setVariant] = React.useState("notice");
-  const { toasts, newToast, handleDismiss } = useContext(ToastContext);
-
+  const { newToast } = useContext(ToastContext);
   return (
     <div className={styles.wrapper}>
       <header>
@@ -76,10 +71,6 @@ function ToastPlayground() {
           </div>
         </div>
       </form>
-
-      {toasts.length > 0 && (
-        <ToastShelf toasts={toasts} handleDismiss={handleDismiss} />
-      )}
     </div>
   );
 }

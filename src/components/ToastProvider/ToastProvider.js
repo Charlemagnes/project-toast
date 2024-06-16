@@ -1,5 +1,7 @@
-import React, { createContext, useCallback } from "react";
-export const ToastContext = createContext(null);
+import React, { createContext, useCallback, useEffect } from "react";
+import ToastShelf from "../ToastShelf/index";
+import { useEscapeKey } from "../../hooks/useEscapeKey";
+export const ToastContext = createContext(() => {});
 
 function ToastProvider({ children }) {
   const [toasts, setToasts] = React.useState([]);
@@ -18,26 +20,14 @@ function ToastProvider({ children }) {
     setToasts((oldToasts) => [...oldToasts, newToast]);
   }, []);
 
-  // function handleDismiss(key) {
-  //   setToasts(toasts.filter((el) => el.key !== key));
-  // }
-
-  // function newToast() {
-  //   // it was suggested i use crypto.randomUUID(),
-  //   // instead of random
-  //   const key = Math.random() * 100;
-  //   const newToasts = [...toasts, {
-  //     'message': message,
-  //     'variant': variant,
-  //     'key': key,
-  //   }];
-  //   setMessage('');
-  //   setToasts(newToasts);
-  // }
+  useEscapeKey(useCallback(() => setToasts([]), []));
 
   return (
-    <ToastContext.Provider value={{ toasts, newToast, handleDismiss }}>
+    <ToastContext.Provider value={{ newToast }}>
       {children}
+      {toasts.length > 0 && (
+        <ToastShelf toasts={toasts} handleDismiss={handleDismiss} />
+      )}
     </ToastContext.Provider>
   );
 }
